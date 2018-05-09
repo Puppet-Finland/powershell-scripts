@@ -101,7 +101,7 @@ function InstallPuppetAgent() {
 
     write-host "Installing management agent..."
 
-    $url="https://downloads.puppetlabs.com/windows/puppet-agent-x64-latest.msi"
+    $url="https://downloads.puppetlabs.com/windows/puppet5/puppet-agent-x64-latest.msi"
     $tempfolder=$env:temp
     $installer="$tempfolder\puppet-agent-x64-latest.msi"
     $msiexec_switches="/qn /i"
