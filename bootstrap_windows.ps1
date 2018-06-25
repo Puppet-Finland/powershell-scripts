@@ -87,7 +87,10 @@ function SetupHostsFile {
     $acl = Get-ACL $hostsFile
     $acl.SetAccessRule($rule)
     Set-Acl -path $hostsFile -AclObject $acl
-    
+
+    # Flush resolver cache. Seems to be needed in 2016.
+    & ipconfig /flushdns
+
 }
 
 #
@@ -113,7 +116,7 @@ function InstallPuppetAgent() {
         }
         catch {
             $ErrorMessage = $_.Exception.Message
-	        write-host "Failed to retrive puppet agent installer. The error message was: $ErrorMessage"
+	    write-host "Failed to retrive puppet agent installer. The error message was: $ErrorMessage"
             break
         }
     }
@@ -135,7 +138,7 @@ function ConfigurePuppetAgent {
 
     param(
         [string]$ServerName,    
-	    [string]$puppetBin = 'C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat',
+	[string]$puppetBin = 'C:\Program Files\Puppet Labs\Puppet\bin\puppet.bat',
         [String]$myFQDN = (Get-WmiObject win32_computersystem).DNSHostName+"."+(Get-WmiObject win32_computersystem).Domain
     )
 
